@@ -129,11 +129,11 @@
                         (travel-distance-simple elevation 
                                                 velocity 
                                                 angle))
-        (find-biggest-in-stream angles 
-                                angle-to-distance
-                                0 
-                                16 
-                                0)))
+                (find-biggest-in-stream angles 
+                                        angle-to-distance
+                                        0 
+                                        16 
+                                        0)))
 (find-best-angle 45 1) ; -> about 45
 
 
@@ -169,12 +169,12 @@
         (define A (* pi (/ (square D) 4)))
         (define beta (* (/ 1 2) C rho A))
         (define hit-ball (system-over-time 0 h (* V (cos alpha)) (* V (sin alpha)) beta m))
-        (define (find-x-when-y-is-0 stream)
+        (define (find-x-when-y-is-0 stream count)
                 (let ((x-y-u-v (stream-car stream)))
                      (if (> (cadr x-y-u-v) 0)
-                         (find-x-when-y-is-0 (stream-cdr stream))
-                         (car x-y-u-v))))
-        (find-x-when-y-is-0 hit-ball))
+                         (find-x-when-y-is-0 (stream-cdr stream) (+ count 1))
+                         (cons (car x-y-u-v) (* count 0.01)))))
+        (find-x-when-y-is-0 hit-ball 0))
 
 ;changing speed
 (travel-distance 0.5 1.25 0.074 1 45 (/ pi 4) 0.15) ; -> about 94m
@@ -191,3 +191,41 @@
 ;in Denver
 (travel-distance 0.5 1.06 0.074 1 45 (/ pi 4) 0.15) ; -> about 101m
 (travel-distance 0.5 1.06 0.074 1 40 (/ pi 4) 0.15) ; -> about 89m
+
+
+;Problem 7: Throwing instead of hitting
+(define (find-best-angle-time C rho D h V m target-distance tolerance)
+        (define angles (cons-stream (/ (* -1 pi) 2) 
+                                    (stream-map (lambda (angle) (+ 0.05 angle))
+                                                angles)))
+        (define (find angles best)
+                (define this-angle (stream-car angles))
+                (define distance-time (travel-distance C rho D h V this-angle m))
+                (define distance (car distance-time))
+                (define time (cdr distance-time))
+                (cond ((> this-angle (/ pi 2)) best)
+                      ((> (abs (- target-distance distance)) tolerance) (find (stream-cdr angles) best))
+                      (else (if (< time (cdr best))
+                                (find (stream-cdr angles) (cons this-angle time))
+                                (find (stream-cdr angles) best)))))
+        (find angles (cons 0 100000)))
+
+
+(find-best-angle-time 0.5 1.25 0.074 1 45 0.15 36 5) ; close to flat, a bit less than a second
+(find-best-angle-time 0.5 1.25 0.074 1 35 0.15 36 5) ; 7 degrees, 1.09 seconds
+(find-best-angle-time 0.5 1.25 0.074 1 55 0.15 36 5)  ; really, really close to flat, 2/3 a second
+
+;outfielding
+(find-best-angle-time 0.5 1.25 0.074 1 45 0.15 30 5) ; 0.63 seconds
+(find-best-angle-time 0.5 1.25 0.074 1 45 0.15 60 5) ; 1.64 seconds
+(find-best-angle-time 0.5 1.25 0.074 1 45 0.15 80 5) ; 2.65 seconds
+
+(find-best-angle-time 0.5 1.25 0.074 1 55 0.15 30 5) ; 0.66 seconds (rounding issues)
+(find-best-angle-time 0.5 1.25 0.074 1 55 0.15 60 5) ; 1.47 seconds
+(find-best-angle-time 0.5 1.25 0.074 1 55 0.15 80 5) ; 2.28 seconds
+
+(find-best-angle-time 0.5 1.25 0.074 1 35 0.15 30 5) ; 0.82 seconds
+(find-best-angle-time 0.5 1.25 0.074 1 35 0.15 60 5) ; 2.2 seconds
+(find-best-angle-time 0.5 1.25 0.074 1 35 0.15 80 10) ; 3.44 seconds (not sure they can really make it -- tolerance is large)
+
+
