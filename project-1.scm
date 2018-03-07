@@ -228,4 +228,74 @@
 (find-best-angle-time 0.5 1.25 0.074 1 35 0.15 60 5) ; 2.2 seconds
 (find-best-angle-time 0.5 1.25 0.074 1 35 0.15 80 10) ; 3.44 seconds (not sure they can really make it -- tolerance is large)
 
+;Problem 8: Do it on a bounce 
 
+(define (travel-distance-with-bounce C rho D h V alpha m bounces)
+        (define (travel-iter accumulator h V count)
+                (if (= count bounces)
+                    accumulator
+                    (let* ((distance-this-bounce (car (travel-distance C rho D h V alpha m)))
+                           (thus-far (+ accumulator distance-this-bounce))) 
+                         (travel-iter thus-far 0.000001 (/ V 2) (+ count 1)))))
+        (travel-iter 0 h V 0))
+
+
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 1) ; -> about 71m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 2) ; -> about 97
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 3) ; -> about 104m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 4) ; -> about 106.6m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 5) ; -> about 107m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 6) ; -> about 107.2
+
+
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 1) ; -> about 59.4m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 2) ; -> about 81.6m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 3) ; -> about 88.1m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 4) ; -> about 89.8m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 5) ; -> about 90.2m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 6) ; -> about 90.4m
+
+
+;Problem 9: Do it on a bounce -- again
+
+(define (state-when-y-is-0 C rho D h V alpha m) 
+        (define A (* pi (/ (square D) 4)))
+        (define beta (* (/ 1 2) C rho A))
+        (define hit-ball (system-over-time 0 h (* V (cos alpha)) (* V (sin alpha)) beta m))
+        (define (when-y-is-0 stream count)
+                (let ((x-y-u-v (stream-car stream)))
+                     (if (> (cadr x-y-u-v) 0)
+                         (when-y-is-0 (stream-cdr stream) (+ count 1))
+                         (cons x-y-u-v (* count 0.01)))))
+        (when-y-is-0 hit-ball 0))
+
+(define (travel-distance-with-bounce C rho D h V alpha m bounces)
+        (define (travel-iter accumulator h V count)
+                (if (= count bounces)
+                    accumulator
+                    (let* ((state-at-bounce (car (state-when-y-is-0 C rho D h V alpha m))
+                           (u-at-bounce (caddr state-at-bounce))
+                           (v-at-bounce (cadddr state-at-bounce))
+                           (x-thus-far (+ accumulator (car state-at-bounce)))) 
+                         (travel-iter x-thus-far 
+                                      0.000001 
+                                      (sqrt (+ (square u-at-bounce) (square v-at-bounce))) 
+                                      (+ count 1)))))
+        (travel-iter 0 h V 0))
+
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 1) ; -> about 71m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 2) ; -> about 108
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 3) ; -> about 133
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 4) ; -> about 151
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 5) ; -> about 166
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 4) 0.15 6) ; -> about 170 hmmm...
+
+
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 1) ; -> about 59.4m
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 2) ; -> about 93.6
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 3) ; -> about 117
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 4) ; -> about 135
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 5) ; -> about 150
+(travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 6) ; -> about 163
+
+;Seems to ne unrealistically long. I tihink the problem is not accounting for loss of energy on impact.
