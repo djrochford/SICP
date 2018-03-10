@@ -298,4 +298,4 @@
 (travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 5) ; -> about 150
 (travel-distance-with-bounce 0.5 1.25 0.074 1 35 (/ pi 3) 0.15 6) ; -> about 163
 
-;Seems to ne unrealistically long. I tihink the problem is not accounting for loss of energy on impact.
+;Seems to ne unrealistically long. I think the problem is not accounting for loss of energy on impact.
