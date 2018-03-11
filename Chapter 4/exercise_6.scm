@@ -1,7 +1,7 @@
 (define (let? exp) (tagged-list? exp 'let))
 (define (let-bindings exp) (cadr exp))
 (define (let-body exp) (cddr exp))
-(define (let-variables bindings) (map car declerations))
+(define (let-variables bindings) (map car bindings))
 (define (let-expressions bindings) (map cdr bindings))
 
 (define (let->combination exp)
