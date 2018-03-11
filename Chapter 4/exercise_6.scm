@@ -1,13 +1,13 @@
 (define (let? exp) (tagged-list? exp 'let))
-(define (let-declarations exp) (cadr exp))
+(define (let-bindings exp) (cadr exp))
 (define (let-body exp) (cddr exp))
-(define (let-variables declarations) (map car declerations))
-(define (let-expressions declarations) (map cdr declarations))
+(define (let-variables bindings) (map car declerations))
+(define (let-expressions bindings) (map cdr bindings))
 
 (define (let->combination exp)
-        (cons (make-lambda (let-variables (let-declarations exp))
+        (cons (make-lambda (let-variables (let-bindings exp))
                                         (let-body exp))
-              (let-expressions (let-declarations exp)))
+              (let-expressions (let-bindings exp)))
 
 (define (eval exp env)
         (cond ((self-evaluating? exp) exp)
