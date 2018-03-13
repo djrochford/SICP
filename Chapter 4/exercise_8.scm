@@ -1,0 +1,32 @@
+(define (let? exp) (tagged-list? exp 'let))
+(define (named-let? exp) (not (pair? (cadr exp))))
+(define (let-bindings exp)
+        (if (named-let? exp)
+            (caddr exp)
+            (cadr exp)))
+(define (let-body exp)
+        (if (named-let? exp)
+            (cdddr exp)
+            (caddr exp)))
+
+(define (let-variables bindings) (map car bindings))
+
+(define (let-expressions bindings) (map cdr bindings))
+(define (let-name exp) 
+        (if (named-let? exp)
+            (cadr exp)
+            (error "Attempted to get name from non-named let expression -- LET-NAME")))
+
+(define (named-let->combination exp)
+        (make-begin (list 'define 
+                          (let-name exp)
+                          (make-lambda (let-variables (let-bindings exp))
+                                       (let-body exp)))
+                    (cons (let-name exp) (let-variables exp))))
+
+(define (let->combination exp)
+        (if (named-let? exp)
+            (named-let->combination exp)
+            (cons (make-lambda (let-variables (let-bindings exp))
+                               (let-body exp))
+                  (let-expressions (let-bindings exp)))))
