@@ -1,0 +1,6 @@
+(define (a-pythagorean-triple-between low high)
+        (let* ((i (an-integer-starting-from low)) 
+               (j (an-integer-between low k))
+               (k (an-integer-between low j)))
+              (require (= (+ (* i i) (* j j)) (* k k)))
+              (list i j k)))
