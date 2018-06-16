@@ -334,8 +334,8 @@
             (display object)))
 
 ;Sample session
-;(define the-global-environment (setup-environment))
-;(driver-loop)
+(define the-global-environment (setup-environment))
+(driver-loop)
 ;;; M-Eval input:
 ;(define (append x y)
 ;  (if (null? x)
