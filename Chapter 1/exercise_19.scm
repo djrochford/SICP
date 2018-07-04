@@ -22,7 +22,8 @@
                               q
                               (- count 1)))))
 
-(fib 345)
+(fib 345) ;563963353180680437428706474693749258212475354428320807161115873039415970
+;(this is the 346th Fib number, on some ways of counting, if you're trying to verify with google)
 
 "Where did the values for p' and q' come from, you ask?
 Consider those transforms:
