@@ -53,6 +53,6 @@
 (timed-prime-test 100000000019) "0.21 seconds"
 (timed-prime-test 100000000057) "0.22 seconds"
 
-"The ratio is about 3/2. Why not 2? I'm not sure if this accounts for all of it,
+"The ratio is about 3/2. Why not 2? I'm not sure if this accounts for all of the discrepancy,
 but one thing is that there is more overhead in calculating `next` than there is in `+`."
 
