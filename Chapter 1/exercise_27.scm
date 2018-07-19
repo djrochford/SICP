@@ -19,7 +19,7 @@
                       (else #f)))
         (fermat-loop (- n 1)))
 
-(fermat-test-em-all 780) ;#f
+(fermat-test-em-all 780) ;#f -- just to show you this does, indeed, return false some (actually most) of the time
 
 (fermat-test-em-all 561) ;#t
 
