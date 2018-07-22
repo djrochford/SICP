@@ -18,14 +18,14 @@
                 (cond ((or (= k 0) (= k n)) 1)
                       ((odd? k) 4)
                       (else 2)))
-        (define (Simpson-iter k)
+        (define (Simpson-recurse k)
                 (if (= k 0)
                     (y 0)
                     (+ (* (coefficient k)
                           (y k))
-                       (Simpson-iter (- k 1)))))
+                       (Simpson-recurse (- k 1)))))
         (* (/ h 3)
-           (Simpson-iter n)))
+           (Simpson-recurse n)))
 
 (Simpson cube 0 1 100) ; 1/4
 
