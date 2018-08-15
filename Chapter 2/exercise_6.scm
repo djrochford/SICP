@@ -14,6 +14,9 @@
 ;Define one and two directly (not in terms of zero and add-1). (
 ;(Hint: Use substitution to evaluate (add-1 zero)). 
 
+"The idea is: one is the function that takes f as input and returns a function that applies f once to an input.
+two if the function that takes f as input and return a function that applies f twice to an input. And so on."
+
 (define one (lambda (f) (lambda (x) (f x))))
 
 (define two (lambda (f) (lambda (x) (f (f x)))))
