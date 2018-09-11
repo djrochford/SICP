@@ -3,7 +3,7 @@
 ;Modify Alyssa's code to check for this condition and to signal an error if it occurs.
 
 (define (div-interval x y)
-        (if (and (not (> (lower-bound y) 0)) ; not >, rather than <, to take care of cases where the upper or lower bound equals 0
+        (if (and (not (> (lower-bound y) 0)) ; `not >`, rather than `<`, to take care of cases where the upper or lower bound equals 0
                  (not (< (upper-bound y) 0)))
             (error "Divisor spans 0 -- DIV-INTERVAL")
             (mul-interval x 
