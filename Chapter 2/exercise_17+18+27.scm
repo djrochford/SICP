@@ -1,9 +1,15 @@
+;Exercise 2.17.  Define a procedure `last-pair` that returns the list that contains 
+;only the last element of a given (nonempty) list:
+
 (define (last-pair chain)
         (if (null? (cdr chain))
             chain
             (last-pair (cdr chain))))
 
-(last-pair (list 23 72 149 34))
+(last-pair (list 23 72 149 34)); (34)
+
+;Exercise 2.18.  Define a procedure `reverse` that takes a list as argument and returns 
+;a list of the same elements in reverse order,
 
 (define (reverse chain)
         (define (reverse-iter anti-chain chain)
@@ -12,7 +18,7 @@
                     (reverse-iter (cons (car chain) anti-chain) (cdr chain))))
         (reverse-iter () chain))
 
-(reverse (list 1 4 9 16 25))
+(reverse (list 1 4 9 16 25)) ;(25 16 9 4 1)
 
 (define (deep-reverse chain)
         (define (reverse-iter anti-chain chain)
