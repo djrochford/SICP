@@ -64,16 +64,16 @@ of `things`"
 '()
 
 (list 2 3 4)
-"`(cons '() (square 2))` equals"
-(list '() 1)
+"`(cons '() (square 1))` equals"
+(cons '() 1)
 
 (list 3 4)
-"`(cons (list '() 1) (square 2))` equals"
-(list (list '() 1) 4)
+"`(cons (cons '() 1) (square 2))` equals"
+(cons (cons '() 1) 4)
 
 "As you can see, what's happening is that the nesting of the lists is the wrong way around;
 we're left-nesting, rather than right-nesting, which means we're making a list with `car`
 the rest of processed `things`, rather with `cdr` the rest of the processed `things`.
 
 The final result of `(square-list (list 1 2 3 4))` in this case is:"
-(list (list (list (list '() 1) 4) 9) 16)
+(cons (cons (cons (cons '() 1) 4) 9) 16)
