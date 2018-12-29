@@ -14,6 +14,6 @@ The most straightforward way to implement the segment constructor and selectors 
 "...assuming that the arguments of `make-segment` will be vectors, as described in the question.
 But this isn't using the vector representation of exercise 2.46 in any interesting way.
 
-Something else you could do is assume that `make-segment` will take co-ordinates, and use those
-to build vectors that gets stored as a pair that consitutes the segment. That would require that you
+Something else you could do is assume that `make-segment` will take co-ordinates, rather than vectors, and use those
+to build vectors that get stored as a pair that consitutes the segment. That would require that you
 use the vector implementation of 2.46. But it's unclear why you'd do that."
