@@ -3,8 +3,8 @@
 "The `element-of-set` function, from the book, will be handy:"
 (define (element-of-set? x set)
         (cond ((null? set) false)
-        ((equal? x (car set)) true)
-        (else (element-of-set? x (cdr set)))))
+              ((equal? x (car set)) true)
+              (else (element-of-set? x (cdr set)))))
 
 "Now here's an answer:"
 (define (union-set set1 set2)
