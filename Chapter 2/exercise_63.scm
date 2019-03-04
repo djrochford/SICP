@@ -152,7 +152,7 @@ obvious enough to not require a proof.)
 "For both tree->list1 and tree->list2, a recursive call will occur once for each element of the tree.
 But tree->list1 will call an `append` for each element, wheras tree->list2 will only call `cons`.
 `cons` is, presumably, constant time, so tree->list-2 is a linear time algorithm.
-But `append` is linear the size of the first parameter.
+But `append` is linear in the size of the first parameter.
 
 Now, for each recursive call, the size of the first parameter passed to `append` is (in a balanced tree)
 half the size of the previous call. So the total work is order n + 2 * n/2 + 4 * n/4 ... (log n times),
