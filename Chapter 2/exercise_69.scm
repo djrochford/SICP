@@ -66,7 +66,7 @@
                                                                   (cadr leaf-set))
                                                    (cddr leaf-set))))))
 
-(define sample-leaves (make-leaf-set '(('A 4) ('B 2) ('D 1) ('C 1))))
+(define sample-leaves (make-leaf-set '((A 4) (B 2) (D 1) (C 1))))
 
 (define sample-tree (successive-merge sample-leaves))
 
@@ -74,7 +74,7 @@ sample-tree
 
 "
 That evaluates to:
-((leaf (quote a) 4) ((leaf (quote b) 2) ((leaf (quote c) 1) (leaf (quote d) 1) ((quote c) (quote d)) 2) ((quote b) (quote c) (quote d)) 4) ((quote a) (quote b) (quote c) (quote d)) 8)
+((leaf a 4) ((leaf b 2) ((leaf c 1) (leaf d 1) (c d) 2) (b c d) 4) (a b c d) 8)
 
 i.e., |-----|------|--D1
       |     |      |
