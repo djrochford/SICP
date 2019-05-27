@@ -81,7 +81,7 @@ the suggested strategy:"
                       (coerce-in-turn type-tags contents)))))
 
 "(Note that this code assumes that we *do* have coercion-prcoedures in the table for coercing
-a value to it's own type, à la Louis Reasoner's idea in exercise 81. The `list-equals?` check
+a value to its own type, à la Louis Reasoner's idea in exercise 81. The `list-equals?` check
 is to stop the end-less loop that can cause.)"
 
 ;Give an example of a situation where
