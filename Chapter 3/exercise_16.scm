@@ -58,3 +58,16 @@ Return 7:
   a        b           c
 "
 
+"To test:"
+
+(define threefer '(a b c))
+(count-pairs threefer) ;3
+
+
+(define end '(a))
+(define middle (cons end end))
+(define fourbee (list middle))
+(count-pairs fourbee); 4
+
+(define sevens (cons middle middle))
+(count-pairs sevens); 7
