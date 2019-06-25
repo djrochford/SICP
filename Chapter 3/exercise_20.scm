@@ -153,7 +153,7 @@ After `(set-car! (cdr z) 17)` (hold on):
   |___________________|       |
                               |
   |   z2 frame      |----------
-  |    m: 'set-cdr  |
+  |    m: 'set-car  |
   |_________________|
 
 
@@ -200,4 +200,5 @@ And finally `(car x)`:
                       |
   |   z frame    |-----
   |     m: 'car  |
+  |______________|
 "
