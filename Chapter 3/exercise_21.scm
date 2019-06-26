@@ -45,4 +45,4 @@ that's the `b` appears as the second item of the printed list in the last case."
 ;procedure `print-queue` that takes a queue as input and prints the sequence of items in the
 ;queue.
 
-(define (print-queue queue) (display (car queue)))
+(define (print-queue queue) (display (front-ptr queue)))
