@@ -51,7 +51,9 @@ to 'deque's):"
                    (else (set-cdr! (cdr new-pair) (front-ptr deque))
                          (set-car! (cdr (front-ptr deque)) new-pair)
                          (set-front-ptr! deque new-pair)
-                         deque))))
+                         "success"))))
+;Note, returning this string, rather than the deque, to avoid making the printer
+;print a cyclic structure.
 
 (define (rear-insert-deque deque item)
         (let ((new-pair (cons item (cons '() '()))))
@@ -61,4 +63,19 @@ to 'deque's):"
                    (else (set-cdr! (cdr (rear-ptr deque)) new-pair)
                          (set-car! (cdr new-pair) (rear-ptr deque))
                          (set-rear-ptr! deque new-pair)
-                         deque))))
+                         "success"))))
+
+(define DQ (make-deque)) ;dq
+
+(front-insert-deque DQ 1) ; ((1 ()) (1 ()))
+
+(front-deque DQ) ; 1
+
+(rear-deque DQ) ; 1
+
+(rear-insert-deque DQ 2) ; "success"
+
+(front-deque DQ) ; 1
+
+(rear-deque DQ) ; 2
+
