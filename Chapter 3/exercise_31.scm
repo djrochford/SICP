@@ -8,7 +8,10 @@
 
 "The only way actions get put on the agenda is by invoking `add-to-agenda`. The only place `add-to-agenda` is
 invoked is in `after-delay`. The only time `after-delay` is invoked is inside the actions that are defined in
-the basic logic gates -- the inverter, the and-gate and the or-gate. The only time these actions are invoked
-is in the `accept-action-procedure`, as defined in the text. Defining `accept-action-procedure` as *above*
-removes the one place where actions get put on the agenda. That being the case, if `accept-action-procedure`
-were defined as above, the agenda would always be empty, and `propogate` would execute nothing."
+the basic logic gates -- the inverter, the and-gate and the or-gate. These actions get invoked in exactly two
+places: by `propogate`, which invokes the actions that are already on the agenda, thus setting the actions for
+the next time, and in `accept-action-procedure!`, as defined in the text. It's the invocation in
+`accept-action-procedure!` that puts actions on the agenda in the first palce; without that invocations, nothing
+gets put on the agenda, and so `propogate` doesn't execute any actions, when it runs, and the agenda remains
+empty.
+"
