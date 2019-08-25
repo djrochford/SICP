@@ -39,3 +39,9 @@
              ((serializer1 (serializer2 exchange))
               account1
               account2)))
+
+"When it is called, `exchange` is put in the serializer of both account1 and account2, and then called.
+Being in the serializer of account 1, `exchange` cannot run at the same time as account 1's  `withdraw`,
+which is also in account 1's serializer. But account 1's `withdraw` is called during the execution of `exchange`.
+So `exchange` cannot finish executing; it's execution blocks to execution of `withdraw`, but `withdraw`
+must execute for `exchange` to finish executing. Something similar holds dor `deposit` and acccount 2."
