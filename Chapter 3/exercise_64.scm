@@ -34,4 +34,4 @@
 (define (sqrt x tolerance)
         (stream-limit (sqrt-stream x) tolerance))
 
-(sqrt 2 0.001)
+(sqrt 2 0.001) ;1.4142135623746899
