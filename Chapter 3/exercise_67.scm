@@ -1,9 +1,6 @@
-(define (display-line x)
-  (newline)
-  (display x))
-
-(define (display-stream s)
-  (stream-for-each display-line s))
+;Exercise 3.67.  Modify the pairs procedure so that (pairs integers integers)
+;will produce the stream of all pairs of integers (i,j) (without the condition i < j).
+;Hint: You will need to mix in an additional stream.
 
 (define (add-streams s1 s2)
         (stream-map + s1 s2))
@@ -31,13 +28,15 @@
 
 (define (pairs s t)
         (cons-stream (list (stream-car s) 
-                           (stream-car t))
+                           (stream-car t)) ; top left-hand corner of table
                      (interleave (interleave (stream-map (lambda (x) (list (stream-car s) x))
-                                                         (stream-cdr t))
+                                                         (stream-cdr t)); top row of table
                                              (stream-map (lambda (x) (list x (stream-car t)))
-                                                         (stream-cdr s)))
+                                                         (stream-cdr s))) ; left column of table
                                  (pairs (stream-cdr s)
-                                        (stream-cdr t)))))
+                                        (stream-cdr t))))) ; rest of table
 
-(display-stream (pairs integers integers))
+(define all-pairs (pairs integers integers))
+
+(stream-ref all-pairs 40) ;(7 2)
 
