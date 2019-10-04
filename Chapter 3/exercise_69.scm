@@ -1,9 +1,7 @@
-(define (display-line x)
-  (newline)
-  (display x))
-
-(define (display-stream s)
-  (stream-for-each display-line s))
+;Exercise 3.69.  Write a procedure `triples` that takes three infinite streams,
+;S, T, and U, and produces the stream of triples (S_i,T_j,U_k) such that i < j < k.
+;Use `triples` to generate the stream of all Pythagorean triples of positive integers,
+;i.e., the triples (i,j,k) such that i < j and i^2 + j^2 = k2.
 
 (define (add-streams s1 s2)
         (stream-map + s1 s2))
@@ -49,4 +47,6 @@
 (define pythagorean-triples
         (stream-filter pythagorean? (triples integers integers integers)))
 
-(stream-ref pythagorean-triples 4)
+(stream-ref pythagorean-triples 1) ;(6 8 10)
+
+(stream-ref pythagorean-triples 2) ;(5 12 13)
