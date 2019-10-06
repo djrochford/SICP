@@ -33,16 +33,15 @@
               ((stream-null? s2) s1)
               (else (let ((s1car (stream-car s1))
                           (s2car (stream-car s2)))
-                         (cond ((<= (weight s1car) (weight s2car))
-                                (cons-stream s1car 
-                                             (merge-weighted (stream-cdr s1) 
-                                                             s2
-                                                             weight)))
-                               ((> (weight s1car) (weight s2car))
-                                (cons-stream s2car 
-                                             (merge-weighted s1 
-                                                             (stream-cdr s2)
-                                                             weight))))))))
+                         (if (<= (weight s1car) (weight s2car))
+                             (cons-stream s1car 
+                                          (merge-weighted (stream-cdr s1) 
+                                                          s2
+                                                          weight)))
+                             (cons-stream s2car 
+                                          (merge-weighted s1 
+                                                          (stream-cdr s2)
+                                                          weight))))))
 
 
 ;Using this, generalize `pairs` to a procedure `weighted-pairs` that takes two streams,
@@ -59,17 +58,18 @@
                                              (stream-cdr t))
                                  (pairs (stream-cdr s) (stream-cdr t)))))
 
-"And here`weighted-pairs`:"
+"And here`s weighted-pairs`:"
 
 (define (weighted-pairs s t weight)
         (cons-stream (list (stream-car s) 
                            (stream-car t))
-                     (merge-weighted (interleave (stream-map (lambda (x) 
-                                                                     (list (stream-car s)
-                                                                           x))
-                                                             (stream-cdr t))
-                                                 (pairs (stream-cdr s)
-                                                        (stream-cdr t))))))
+                     (merge-weighted (stream-map (lambda (x) 
+                                                         (list (stream-car s)
+                                                               x))
+                                                 (stream-cdr t))
+                                     (weighted-pairs (stream-cdr s)
+                                                     (stream-cdr t)
+                                                     weight))))
 "Note this only works on the assumption (made in the text in a footnote) that the weights
 increase as you move out along a row and down along a column. This problem is *much* harder
 if that assumption is relaxed, and in fact unsolvable in full generality (because things may
