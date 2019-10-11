@@ -38,10 +38,42 @@
 ;RLC should produce a procedure that takes the initial values of the state variables,
 ;v_C_0 and i_L_0, and produces a pair (using cons) of the streams of states v_C and i_L.
 
+"Some helpers:"
+
+(define (add-streams s1 s2)
+        (stream-map + s1 s2))
+
+(define (scale-stream stream factor)
+        (stream-map (lambda (x) (* x factor)) stream))
+
+(define (integral delayed-integrand initial-value dt)
+        (define int
+                (cons-stream initial-value
+                             (let ((integrand (force delayed-integrand)))
+                                  (add-streams (scale-stream integrand dt)
+                                               int))))
+        int)
+
 (define (RLC R L C dt)
-        (define v_C (integral (delay dv_C))
+        (lambda (vC0 iL0)
+                (define vC (integral (delay dvC) vC0 dt))
+                (define iL (integral (delay diL) iL0 dt))
+                (define dvC (scale-stream iL (/ -1 C)))
+                (define diL (add-streams (scale-stream vC (/ 1 L))
+                                         (scale-stream iL (/(* -1 R) L))))
+                (cons vC iL)))
 
 ;Using `RLC`, generate the pair of streams that models the behavior of a series RLC circuit
 ;with R = 1 ohm, C = 0.2 farad, L = 1 henry, dt = 0.1 second, and initial values iL0 = 0 amps
 ;and vC0 = 10 volts.
 
+(define myRLC ((RLC 1 1 0.2 0.1) 10 0))
+
+(stream-ref (car myRLC) 0) ;10
+(stream-ref (cdr myRLC) 0) ;0
+
+(stream-ref (car myRLC) 2) ;10
+(stream-ref (cdr myRLC) 2) ;1
+
+(stream-ref (car myRLC) 2) ;9.5
+(stream-ref (cdr myRLC) 2) ;1.9
