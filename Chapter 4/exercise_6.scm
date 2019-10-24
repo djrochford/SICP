@@ -22,7 +22,7 @@
 
 (define (let->combination exp)
         (cons (make-lambda (let-variables (let-bindings exp))
-                                        (let-body exp))
+                           (let-body exp))
               (let-expressions (let-bindings exp)))
 
 (define (eval exp env)
