@@ -119,5 +119,5 @@ the `let` body.)"
 Note that here, the procedure objects are reference the f-exeuction-frame, as they
 are passed in as arguments to the letrec/lambda procedure in that frame.
 So the reference to `odd?` in `even?` will not find the appropriate binding in
-it's environment. Same goes for the referene to `even?` in `odd?`.
+it's environment. Same goes for the reference to `even?` in `odd?`.
 "
