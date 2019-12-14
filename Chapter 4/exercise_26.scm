@@ -18,3 +18,9 @@
 
 ;...and give an example of a situation where it might be useful to
 ;have unless available as a procedure, rather than as a special form.
+
+"I suppose I could come up with a situation in which it would be handy to pass
+an `unless` to a `map`, but anything you could do with an `unless` procedure
+you could also do with a `lambda` expresssion wrapping an `unless` expression.
+I don't think there is any *more* reason to want an `unless` procedure than to
+want and `if` procedure."
