@@ -21,10 +21,9 @@
                    (proc (node tree))
                    (tree-map proc (right tree))))
 
-
-(define power-of-two-fractions (make-tree (tree-map (lambda (x) (/ x 2))
-                                                    power-of-two-fractions)
-                                          (/ 1 2)
-                                          (tree-map (lambda (x) (/ (* 3 x) 2))
-                                                    power-of-two-fractions)))
+(define binary-strings (make-tree (tree-map (lambda (bs) (string-append bs "0"))
+                                            binary-strings)
+                                   ""
+                                   (tree-map (lambda (bs) (string-append bs "1"))
+                                             binary-strings)))
 
