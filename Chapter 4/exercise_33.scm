@@ -14,14 +14,13 @@
 (define (text-of-quotation exp) (cadr exp))
 
 "We'll change this to handles pairs, and hence lists, differently."
+"Let `new-cons` be the cons as defined in this part of this text. Then we'll let
+`text-of-quotation` be:"
 
 (define (text-of-quotation exp)
         (define (text-convert exp)
                 (if (pair? exp)
-                    (cons (text-convert (car exp))
+                    (new-cons (text-convert (car exp))
                           (text-convert (cdr exp)))
                      exp))
         (text-convert (cadr exp)))
-
-"(This assumes that `cons`, `car` and `cdr` (but not `cadr`) have beend defined in
-the new way.)"
