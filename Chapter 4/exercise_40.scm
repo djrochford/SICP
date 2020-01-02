@@ -35,7 +35,7 @@
                                                       (= x miller)
                                                       (= x cooper)
                                                       (= x baker))))
-                                             (list 1 2 3 4 5)))))
+                                     (list 1 2 3 4 5)))))
               (list (list 'baker baker)
                     (list 'cooper cooper)
                     (list 'fletcher fletcher)
