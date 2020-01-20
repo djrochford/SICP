@@ -13,7 +13,22 @@
 
 "Let B1 be Betty's first statement, B2 her second, E1 Ethel's first statement, and so on.
 
-First, note that B1 = K1 -> not-K2 = not-M1 -> M2 -> not-E1 -> E2 -> not-J1 -> J2 ->
+First, note that B1 = K1 -> not-K2 = not-M1 -> M2 -> not-E1 -> E2 -> not-B1
+So B1 implies a contradiction, and must be false, and B2 must be true.
+
+So Betty was third.
+
+Now, B2 -> not-J1 -> J2 -> not-E1 -> E2
+
+So Ethel was fifth, and Joan was second.
+
+Also, B2 -> not-M2 -> M1.
+
+So Mary was fourth.
+
+That leaves Kitty for first place.
+
+So the solution is: Kitty first, Joan second, Betty third, Mary fourth and Ethel fifth.
 "
 
 
