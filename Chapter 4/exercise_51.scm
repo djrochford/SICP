@@ -36,7 +36,8 @@ try-again
 
 "Our function, which I'll call `analyze-permanent-assignment`, can be much simpler, as it doesn't need
 to reset the value on fail. It can just do the naïve thing, which is to set the variable and pass on
-the continuations like usual."
+the continuations like usual. It will, in fact, be exactly the same as `analyze-definition`, except it uses
+`set-variable-value!` where `analyze-definition` uses `define-variable!`."
 
 (define (analyze-permanent-assignment exp)
         (let ((var (assignment-variable exp))
