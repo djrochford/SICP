@@ -28,6 +28,6 @@ function in Ben's scheme will include more than one frame per relevant entry, an
 accumulation-function will double count some values."
 
 ;Outline a method he can use to salvage the situation.
-"Ben needs a way of de-duping frames. He can check that the bindings of the frames and throw out
-frames that duplicate the same bindings, before passing the input to the accumulation-function.
-This is probably something the system should do anyway."
+"Ben needs a way of de-duping frames. He can check that the bindings of the frames for the variables
+that appear in the query pattern, and throw out frames that duplicate previously seen bindings
+before passing the input to the accumulation-function. This is probably something the system should do anyway."
