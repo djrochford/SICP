@@ -11,8 +11,8 @@
 ;Can your rules answer both `(reverse (1 2 3) ?x)` and (reverse ?x (1 2 3))` ?
 
 "In the following, I use the following scheme to disambiguate variables. Variables from
-rule get numbers added to them, so the ?x from the first application of a rule with an ?x
-in it is called ?x1, and so on. For the ?x-es that appear in the original
+rule get numbers added to them, plus the rule, so the ?x from the first application of a
+a reverse rule with an ?x in it is called ?x1-reverse, and so on. For the ?x-es that appear in the original
 queies, I use ?x-query. "
 
 "For reference, here are the `append-to-form` rules:"
@@ -22,25 +22,44 @@ queies, I use ?x-query. "
 
 "First, `(reverse (1 2 3) ?x)`"
 (reverse (1 2 3) ?x-query)
-=> (and (reverse (2 3) ?w1)
-	  	(append-to-form ?w1 (1) ?x-query))
-"In a frame with ?x1 bound to 1, ?y1 bound to (2 3), ?z1 bound to ?x-query and ?w1 unbound."
+=> (and (reverse (2 3) ?w1-reverse)
+	  	(append-to-form ?w1-reverse (1) ?x-query))
+"In a frame with ?x1-reverse bound to 1, ?y1-reverse bound to (2 3), ?z1-reverse bound to
+?x-query and ?w1-reverse unbound."
 
 "The `reverse` part is processed like this:"
-=> (and (reverse (3) ?w2)
-		(append-to-form ?w2 (2) ?w1))
-"In a frame with ?x2 bound to 2, ?y2 bound to (3), ?z2 bound to ?w1 and ?w2 and ?w1 unbound."
+=> (and (reverse (3) ?w2-reverse)
+		(append-to-form ?w2-reverse (2) ?w1-reverse))
+"In a frame with ?x2-reverse bound to 2, ?y2-reverse bound to (3), ?z2-reverse bound to ?w1
+and ?w2-reverse and ?w1-reverse unbound."
 
 "and again"
-=> (and (reverse () ?w3)
-		(append-to-form ?w3 (3) ?w2))
-"with ?x3 bound to 3, ?y3 bound to (), ?z3 bound to ?w3 and ?w2 unbound"
+=> (and (reverse () ?w3-reverse)
+		(append-to-form ?w3-reverse (3) ?w2-reverse))
+"with ?x3-reverse bound to 3, ?y3-reverse bound to (), ?z3-reverse bound to ?w3-reverse and ?w3-reverse
+and ?w2-reverse unbound."
+"The reverse calculations bottom out here:"
 => (reverse () ())
+"with ?w3-reverse bound to ()"
 
-"So with ?w is bound to (), we now process the last `append-to-form";
-=> (append-to-form () (3) ?z)
+"Then we evaluate the final `(append-to-form ?w3-reverse (3) ?w2-reverse))`, with ?w3 bound to ():"
+=> (append-to-form () (3) ?w2-reverse)
 => (append-to-form () (3) (3))
+"with ?w2-reverse bound to (3)"
 
-"so now with ?z bound to (3) we process the `append-to-form` before that:"
+"Now we process the `(append-to-form ?w2-reverse (2) ?w1-reverse)`"
+=> (append-to-form (3) (2) ?w1-reverse)
+=> (append-to-form () (2) ?z1-atf)
+"With ?w1-reverse bound to (?u1-atf . ?z1-atf), ?u1-atf bound to 3, ?v1-atf bound to (), ?y1-atf bound to (2) and ?z1-atf unbound"
+"That becomes"
+=> (append-to-form () (2) (2))
+"So now ?z1-atf is bound to (2), which makes ?w1-reverse bound to (3 2)"
 
+"Now we process `(append-to-form ?w1-reverse (1) ?x-query))`. I won't step through the details again;
+the result is that ?x-query gets bound to (3 2 1). And that is our answer."
+
+"Sadly, we get an infinite loop when we try to process (reverse ?x (1 2 3))"
+
+"If we reverse the order of the conjuncts in the second `reverse` rule, the opposite happens: we get
+and answer for `(reverse ?x (1 2 3))` but not for (reverse (1 2 3) ?x)"ß
 
